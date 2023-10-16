@@ -35,17 +35,17 @@ async function run() {
       const { field, searchTerm } = req.query;
       let query = {};
 
-      // if (field && searchTerm) {
-      //   query[field] = { $regex: searchTerm, $options: "i" };
-      // } else if (field) {
-      //   query[field] = "";
-      // } else if (searchTerm) {
-      //   query = {
-      //     $or: [{ title: { $regex: searchTerm, $options: "i" } }, { author: { $regex: searchTerm, $options: "i" } }],
-      //   };
-      // } else {
-      //   query = {};
-      // }
+      if (field && searchTerm) {
+        query[field] = { $regex: searchTerm, $options: "i" };
+      } else if (field) {
+        query[field] = "";
+      } else if (searchTerm) {
+        query = {
+          $or: [{ title: { $regex: searchTerm, $options: "i" } }, { author: { $regex: searchTerm, $options: "i" } }],
+        };
+      } else {
+        query = {};
+      }
 
       try {
         const products = await productCollection.find(query).toArray();
