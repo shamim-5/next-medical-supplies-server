@@ -25,6 +25,11 @@ async function run() {
     await client.connect();
 
     const productCollection = client.db("nb_surgical").collection("products");
+    const topProductCollection = client.db("nb_surgical").collection("top-rated-products");
+    const reagentCollection = client.db("nb_surgical").collection("reagents");
+    const consumableCollection = client.db("nb_surgical").collection("consumables");
+    const medicalEquipmentCollection = client.db("nb_surgical").collection("medical-equipments");
+    const shopDeatailCollection = client.db("nb_surgical").collection("shop-details");
 
     app.get("/products", async (req, res) => {
       const { field, searchTerm } = req.query;
@@ -88,6 +93,41 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await productCollection.deleteOne(query);
+
+      res.status(200).send(result);
+    });
+
+    // top-rated-product collection
+    app.get("/top-products", async (req, res) => {
+      const result = await topProductCollection.find({}).toArray();
+
+      res.status(200).send(result);
+    });
+
+    // reagents collection
+    app.get("/reagents", async (req, res) => {
+      const result = await reagentCollection.find({}).toArray();
+
+      res.status(200).send(result);
+    });
+
+    // consumables collection
+    app.get("/consumables", async (req, res) => {
+      const result = await consumableCollection.find({}).toArray();
+
+      res.status(200).send(result);
+    });
+
+    // medical-equipments collection;
+    app.get("/medical-equipments", async (req, res) => {
+      const result = await medicalEquipmentCollection.find({}).toArray();
+
+      res.status(200).send(result);
+    });
+
+    // shop-details collection;
+    app.get("/shop-details", async (req, res) => {
+      const result = await shopDeatailCollection.find({}).toArray();
 
       res.status(200).send(result);
     });
