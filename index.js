@@ -106,23 +106,80 @@ async function run() {
 
     // reagents collection
     app.get("/reagents", async (req, res) => {
-      const result = await reagentCollection.find({}).toArray();
+      const { field, searchTerm } = req.query;
+      let query = {};
 
-      res.status(200).send(result);
+      if (field && searchTerm) {
+        query[field] = { $regex: searchTerm, $options: "i" };
+      } else if (field) {
+        query[field] = "";
+      } else if (searchTerm) {
+        query = {
+          $or: [{ title: { $regex: searchTerm, $options: "i" } }, { author: { $regex: searchTerm, $options: "i" } }],
+        };
+      } else {
+        query = {};
+      }
+
+      try {
+        const result = await reagentCollection.find(query).toArray();
+        res.status(200).send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while fetching products." });
+      }
     });
 
     // consumables collection
     app.get("/consumables", async (req, res) => {
-      const result = await consumableCollection.find({}).toArray();
+      const { field, searchTerm } = req.query;
+      let query = {};
 
-      res.status(200).send(result);
+      if (field && searchTerm) {
+        query[field] = { $regex: searchTerm, $options: "i" };
+      } else if (field) {
+        query[field] = "";
+      } else if (searchTerm) {
+        query = {
+          $or: [{ title: { $regex: searchTerm, $options: "i" } }, { author: { $regex: searchTerm, $options: "i" } }],
+        };
+      } else {
+        query = {};
+      }
+
+      try {
+        const result = await consumableCollection.find(query).toArray();
+        res.status(200).send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while fetching products." });
+      }
     });
 
     // medical-equipments collection;
     app.get("/medical-equipments", async (req, res) => {
-      const result = await medicalEquipmentCollection.find({}).toArray();
+      const { field, searchTerm } = req.query;
+      let query = {};
 
-      res.status(200).send(result);
+      if (field && searchTerm) {
+        query[field] = { $regex: searchTerm, $options: "i" };
+      } else if (field) {
+        query[field] = "";
+      } else if (searchTerm) {
+        query = {
+          $or: [{ title: { $regex: searchTerm, $options: "i" } }, { author: { $regex: searchTerm, $options: "i" } }],
+        };
+      } else {
+        query = {};
+      }
+
+      try {
+        const result = await medicalEquipmentCollection.find(query).toArray();
+        res.status(200).send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while fetching products." });
+      }
     });
 
     // shop-details collection;
