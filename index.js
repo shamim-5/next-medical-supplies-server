@@ -11,7 +11,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvfqmi4.mongodb.net/?retryWrites=true&w=majority`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvfqmi4.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb://localhost:27017/nb_surgical`;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -30,6 +31,8 @@ async function run() {
     const consumableCollection = client.db("nb_surgical").collection("consumables");
     const medicalEquipmentCollection = client.db("nb_surgical").collection("medical-equipments");
     const shopDeatailCollection = client.db("nb_surgical").collection("shop-details");
+
+    const cartItemsCollection = client.db("nb_surgical").collection("cart-items");
 
     app.get("/products", async (req, res) => {
       const { field, searchTerm } = req.query;
@@ -59,32 +62,32 @@ async function run() {
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
-      const book = await productCollection.findOne(query);
+      const item = await productCollection.findOne(query);
 
-      res.status(200).send(book);
+      res.status(200).send(item);
     });
 
     app.post("/products", async (req, res) => {
-      const book = req.body;
-      const result = await productCollection.insertOne(book);
+      const item = req.body;
+      const result = await productCollection.insertOne(item);
 
       res.status(200).send(result);
     });
 
     app.patch("/products/:id", async (req, res) => {
       const id = req.params.id;
-      const book = req.body;
+      const item = req.body;
       const filter = { _id: new ObjectId(id) };
 
-      const bookId = book._id ? { _id: new ObjectId(book._id) } : {};
+      const itemId = item._id ? { _id: new ObjectId(item._id) } : {};
 
-      const updatedBook = {
+      const updateditem = {
         $set: {
-          ...book,
-          ...bookId,
+          ...item,
+          ...itemId,
         },
       };
-      const result = await productCollection.updateOne(filter, updatedBook);
+      const result = await productCollection.updateOne(filter, updateditem);
 
       res.status(200).send(result);
     });
@@ -180,6 +183,59 @@ async function run() {
         console.error(error);
         res.status(500).json({ error: "An error occurred while fetching products." });
       }
+    });
+
+    // cart-items route  handle
+
+    //  app.patch("/cart-items/:id", async (req, res) => {
+    //    const id = req.params.id;
+    //    const item = req.body;
+    //    const filter = { _id: new ObjectId(id) };
+
+    //    const itemId = item._id ? { _id: new ObjectId(item._id) } : {};
+
+    //    const updateditem = {
+    //      $set: {
+    //        ...item,
+    //        ...itemId,
+    //      },
+    //    };
+    //    const result = await productCollection.updateOne(filter, updateditem);
+
+    //    res.status(200).send(result);
+    //  });
+    app.get("/cart-items", async (req, res) => {
+      const result = await cartItemsCollection.find({}).toArray();
+
+      res.status(200).send(result);
+    });
+
+    app.get("/cart-items/:email", async (req, res) => {
+      const email = req.params.email;
+
+      try {
+        const result = await cartItemsCollection.find({ email }).toArray();
+
+        res.status(200).send(result);
+      } catch (error) {
+        res.status(500).send("Error retrieving data");
+      }
+    });
+
+    app.post("/cart-items", async (req, res) => {
+      const items = req.body;
+      const result = await cartItemsCollection.insertOne(items);
+
+      res.status(200).send(result);
+    });
+
+    app.delete("/cart-items/:orderId", async (req, res) => {
+      const orderId = req.params.orderId;
+      const filter = { _id: new ObjectId(orderId) };
+
+      const result = await cartItemsCollection.deleteOne(filter);
+
+      res.status(200).send(result);
     });
 
     // shop-details collection;
