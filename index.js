@@ -11,8 +11,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvfqmi4.mongodb.net/?retryWrites=true&w=majority`;
-// const uri = `mongodb://localhost:27017/nb_surgical`;
+// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvfqmi4.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb://localhost:27017/nb_surgical`;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -33,6 +33,7 @@ async function run() {
     const shopDeatailCollection = client.db("nb_surgical").collection("shop-details");
 
     const cartItemsCollection = client.db("nb_surgical").collection("cart-items");
+    const ordersCollection = client.db("nb_surgical").collection("orders");
 
     app.get("/products", async (req, res) => {
       const { field, searchTerm } = req.query;
@@ -62,15 +63,15 @@ async function run() {
     app.get("/products/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
-      const item = await productCollection.findOne(query);
 
+      const item = await productCollection.findOne(query);
       res.status(200).send(item);
     });
 
     app.post("/products", async (req, res) => {
       const item = req.body;
-      const result = await productCollection.insertOne(item);
 
+      const result = await productCollection.insertOne(item);
       res.status(200).send(result);
     });
 
@@ -87,8 +88,8 @@ async function run() {
           ...itemId,
         },
       };
-      const result = await productCollection.updateOne(filter, updateditem);
 
+      const result = await productCollection.updateOne(filter, updateditem);
       res.status(200).send(result);
     });
 
@@ -185,25 +186,7 @@ async function run() {
       }
     });
 
-    // cart-items route  handle
-
-    //  app.patch("/cart-items/:id", async (req, res) => {
-    //    const id = req.params.id;
-    //    const item = req.body;
-    //    const filter = { _id: new ObjectId(id) };
-
-    //    const itemId = item._id ? { _id: new ObjectId(item._id) } : {};
-
-    //    const updateditem = {
-    //      $set: {
-    //        ...item,
-    //        ...itemId,
-    //      },
-    //    };
-    //    const result = await productCollection.updateOne(filter, updateditem);
-
-    //    res.status(200).send(result);
-    //  });
+    // cart-items collection api
     app.get("/cart-items", async (req, res) => {
       const result = await cartItemsCollection.find({}).toArray();
 
@@ -215,7 +198,6 @@ async function run() {
 
       try {
         const result = await cartItemsCollection.find({ email }).toArray();
-
         res.status(200).send(result);
       } catch (error) {
         res.status(500).send("Error retrieving data");
@@ -224,8 +206,8 @@ async function run() {
 
     app.post("/cart-items", async (req, res) => {
       const items = req.body;
-      const result = await cartItemsCollection.insertOne(items);
 
+      const result = await cartItemsCollection.insertOne(items);
       res.status(200).send(result);
     });
 
@@ -234,11 +216,59 @@ async function run() {
       const filter = { _id: new ObjectId(orderId) };
 
       const result = await cartItemsCollection.deleteOne(filter);
-
       res.status(200).send(result);
     });
 
-    // shop-details collection;
+    // orders collection api
+
+    app.get("/orders", async (req, res) => {
+      const query = {};
+
+      try {
+        const result = await ordersCollection.find(query).toArray();
+        res.status(200).send(result);
+      } catch (error) {
+        res.status(500).send("Error retrieving data");
+      }
+    });
+
+    app.get("/orders/:email", async (req, res) => {
+      const email = req.params.email;
+
+      try {
+        const result = await ordersCollection.find({ email }).toArray();
+        res.status(200).send(result);
+      } catch (error) {
+        res.status(500).send("Error retrieving data");
+      }
+    });
+
+    app.post("/orders", async (req, res) => {
+      const items = req.body;
+      const orderId = items._id ? { _id: new ObjectId(items._id) } : {};
+
+      const result = await ordersCollection.insertOne({ ...items, ...orderId });
+      res.status(200).send(result);
+    });
+
+    app.patch("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const order = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const orderId = order._id ? { _id: new ObjectId(order._id) } : {};
+
+      const updatedOrder = {
+        $set: {
+          ...order,
+          ...orderId,
+        },
+      };
+
+      const result = await ordersCollection.updateOne(filter, updatedOrder);
+      res.status(200).send(result);
+    });
+
+    // shop-details collection api;
     app.get("/shop-details", async (req, res) => {
       const result = await shopDeatailCollection.find({}).toArray();
 
