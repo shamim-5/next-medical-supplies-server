@@ -11,8 +11,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvfqmi4.mongodb.net/?retryWrites=true&w=majority`;
-const uri = `mongodb://localhost:27017/nb_surgical`;
+const uri =
+  process.env.DB_URI ||
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.hvfqmi4.mongodb.net/?retryWrites=true&w=majority`;
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
