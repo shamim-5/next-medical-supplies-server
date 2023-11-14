@@ -1,3 +1,3 @@
-export type IProductData = {
- field: string,
+export type IProductFilterRequest = {
+ searchTerm?: string,
 }

@@ -7,27 +7,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model DueList {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
-  name  String
-  role  String
-
-  @@map("due-lists")
-}
-
-model TopProduct {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  category     String
-  description  String
-  price        Int
-  stock        Int
-  manufacturer String
-  imageURL     String
-  avatarUrl    String
-}
-
 model Product {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   name         String
@@ -40,6 +19,70 @@ model Product {
   avatarUrl    String
 
   reviews Review[]
+
+  @@map("products")
+}
+
+model TopRatedProduct {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  @@map("top-rated-products")
+}
+
+model Reagent {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  reviews Review[]
+
+  @@map("reagents")
+}
+
+model Consumable {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  reviews Review[]
+
+  @@map("consumables")
+}
+
+model MedicalEquipment {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  reviews Review[]
+
+  @@map("medical-equipments")
 }
 
 // model CartItems {
@@ -52,7 +95,20 @@ model Product {
 //   paid      Boolean
 //   timestamp String
 
-//   // order Record[]
+//   order Record[]
+// }
+
+// model Orders {
+//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
+//   userId    String
+//   userName  String
+//   email     String
+//   status    Boolean
+//   active    Boolean
+//   paid      Boolean
+//   timestamp String
+
+//   order Record[]
 // }
 
 // model Record {
@@ -91,4 +147,27 @@ model Review {
 
   product   Product @relation(fields: [productId], references: [id])
   productId String  @db.ObjectId
+
+  reagent   Reagent @relation(fields: [reagentId], references: [id])
+  reagentId String  @db.ObjectId
+
+  consumable   Consumable @relation(fields: [consumableId], references: [id])
+  consumableId String     @db.ObjectId
+
+  medicalEquipment   MedicalEquipment @relation(fields: [medicalEquipmentId], references: [id])
+  medicalEquipmentId String           @db.ObjectId
+}
+
+model ShopDetail {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  location       Json
+  contact        Json
+  specialOffers  Json
+  openingHours   Json
+  paymentMethods String[]
+  website        String
+  sliderImage    Json
+
+  @@map("shop-details")
 }
