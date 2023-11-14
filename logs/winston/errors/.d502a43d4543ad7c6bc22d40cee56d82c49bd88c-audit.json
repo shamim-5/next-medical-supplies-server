@@ -1,0 +1,25 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Projects\\assignments-9\\prisma-server-for-next-medical-supplies\\logs\\winston\\errors\\.d502a43d4543ad7c6bc22d40cee56d82c49bd88c-audit.json",
+    "files": [
+        {
+            "date": 1699809776583,
+            "name": "C:\\Projects\\assignments-9\\prisma-server-for-next-medical-supplies\\logs\\winston\\errors\\ps-2023-12-11-23-error.log",
+            "hash": "b23e91f01273d8117b41836973c2564dca30bf8e1405398cad04045655afbdd2"
+        },
+        {
+            "date": 1699813284632,
+            "name": "C:\\Projects\\assignments-9\\prisma-server-for-next-medical-supplies\\logs\\winston\\errors\\ps-2023-13-11-00-error.log",
+            "hash": "7b044a5ad4023be568fc9aae1e5a58a51870234d926087dd6029667085e68342"
+        },
+        {
+            "date": 1699945302043,
+            "name": "C:\\Projects\\assignments-9\\prisma-server-for-next-medical-supplies\\logs\\winston\\errors\\ps-2023-14-11-13-error.log",
+            "hash": "fa5976f6b896d412efa34864a18be86bc4d5ca4e9ecd40d1160ed9eb23a3d534"
+        }
+    ],
+    "hashType": "sha256"
+}

@@ -1,0 +1,94 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model DueList {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  name  String
+  role  String
+
+  @@map("due-lists")
+}
+
+model TopProduct {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+}
+
+model Product {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  reviews Review[]
+}
+
+// model CartItems {
+//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
+//   userId    String
+//   userName  String
+//   email     String
+//   status    Boolean
+//   active    Boolean
+//   paid      Boolean
+//   timestamp String
+
+//   // order Record[]
+// }
+
+// model Record {
+//   id           String @id @default(auto()) @map("_id") @db.ObjectId
+//   name         String
+//   category     String
+//   description  String
+//   price        Int
+//   stock        Int
+//   manufacturer String
+//   imageURL     String
+//   avatarUrl    String
+
+//   quantity   Int
+//   priceTotal Int
+
+//   // reviews Review[]
+// }
+
+// model ManageItems {
+//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
+//   status    Boolean
+//   active    Boolean
+//   paid      Boolean
+//   timestamp String
+
+//   // order Record[]
+// }
+
+model Review {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  rating   String
+  userName String
+  email    String
+  comment  String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @db.ObjectId
+}
