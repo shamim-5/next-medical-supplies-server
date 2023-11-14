@@ -1,3 +1,3 @@
-export type IMedicalEquipmentData = {
- field: string,
-}
+export type IMedicalEquipmentFilterRequest = {
+  searchTerm?: string;
+};

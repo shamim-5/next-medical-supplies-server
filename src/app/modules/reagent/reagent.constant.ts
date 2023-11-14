@@ -1,1 +1,4 @@
-export const reagentConstantFields: string[] = ['', '', ''];
+export const reagentSearchAbleFields: string[] = ['name', 'category', 'manufacturer'];
+
+export const reagentFilterableFields = ['searchTerm'];
+

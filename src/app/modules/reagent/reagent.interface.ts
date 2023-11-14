@@ -1,3 +1,3 @@
-export type IReagentData = {
- field: string,
-}
+export type IReagentFilterRequest = {
+  searchTerm?: string;
+};

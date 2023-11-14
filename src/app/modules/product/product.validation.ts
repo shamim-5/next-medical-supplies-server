@@ -26,13 +26,7 @@ const create = z.object({
     avatarUrl: z.string({
       required_error: 'Avatar-URL is required',
     }),
-    reviews: z
-      .array(
-        z.object({
-          productId: z.string({}),
-        }),
-      )
-      .optional(),
+    reviews: z.array(z.object({})).optional(),
   }),
 });
 

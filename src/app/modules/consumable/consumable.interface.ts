@@ -1,3 +1,3 @@
-export type IConsumableData = {
- field: string,
-}
+export type IConsumableFilterRequest = {
+  searchTerm?: string;
+};
