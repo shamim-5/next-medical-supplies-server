@@ -85,58 +85,33 @@ model MedicalEquipment {
   @@map("medical-equipments")
 }
 
-// model CartItems {
-//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-//   userId    String
-//   userName  String
-//   email     String
-//   status    Boolean
-//   active    Boolean
-//   paid      Boolean
-//   timestamp String
+model CartItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  userName  String
+  email     String
+  status    Boolean
+  active    Boolean
+  paid      Boolean
+  timestamp String
+  order     Json[]
 
-//   order Record[]
-// }
+  @@map("cart-items")
+}
 
-// model Orders {
-//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-//   userId    String
-//   userName  String
-//   email     String
-//   status    Boolean
-//   active    Boolean
-//   paid      Boolean
-//   timestamp String
+model Order {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  userName  String
+  email     String
+  status    Boolean
+  active    Boolean
+  paid      Boolean
+  timestamp String
+  order     Json[]
 
-//   order Record[]
-// }
-
-// model Record {
-//   id           String @id @default(auto()) @map("_id") @db.ObjectId
-//   name         String
-//   category     String
-//   description  String
-//   price        Int
-//   stock        Int
-//   manufacturer String
-//   imageURL     String
-//   avatarUrl    String
-
-//   quantity   Int
-//   priceTotal Int
-
-//   // reviews Review[]
-// }
-
-// model ManageItems {
-//   id        String  @id @default(auto()) @map("_id") @db.ObjectId
-//   status    Boolean
-//   active    Boolean
-//   paid      Boolean
-//   timestamp String
-
-//   // order Record[]
-// }
+  @@map("orders")
+}
 
 model Review {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
