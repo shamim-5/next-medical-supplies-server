@@ -53,6 +53,22 @@ model Reagent {
   @@map("reagents")
 }
 
+model Device {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  reviews Review[]
+
+  @@map("devices")
+}
+
 model Consumable {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   name         String
@@ -125,6 +141,9 @@ model Review {
 
   reagent   Reagent @relation(fields: [reagentId], references: [id])
   reagentId String  @db.ObjectId
+
+  device   Device @relation(fields: [deviceId], references: [id])
+  deviceId String @db.ObjectId
 
   consumable   Consumable @relation(fields: [consumableId], references: [id])
   consumableId String     @db.ObjectId

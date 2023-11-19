@@ -1,12 +1,13 @@
 import express from 'express';
-import { ProductRoute } from '../modules/product/product.route';
-import { TopProductRoute } from '../modules/topProduct/topProduct.route';
-import { ReagentRoute } from '../modules/reagent/reagent.route';
-import { ConsumableRoute } from '../modules/consumable/consumable.route';
-import { MedicalEquipmentRoute } from '../modules/medicalEquipment/medicalEquipment.route';
 import { CartItemRoute } from '../modules/cartItem/cartItem.route';
+import { ConsumableRoute } from '../modules/consumable/consumable.route';
+import { DeviceRoute } from '../modules/device/device.route';
+import { MedicalEquipmentRoute } from '../modules/medicalEquipment/medicalEquipment.route';
 import { OrderRoute } from '../modules/order/order.route';
+import { ProductRoute } from '../modules/product/product.route';
+import { ReagentRoute } from '../modules/reagent/reagent.route';
 import { ShopDetailRoute } from '../modules/shopDetail/shopDetail.route';
+import { TopProductRoute } from '../modules/topProduct/topProduct.route';
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/reagents',
     route: ReagentRoute,
+  },
+  {
+    path: '/devices',
+    route: DeviceRoute,
   },
   {
     path: '/consumables',
