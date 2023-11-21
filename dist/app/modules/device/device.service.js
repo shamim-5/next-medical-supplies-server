@@ -23,17 +23,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsumableService = void 0;
+exports.DeviceService = void 0;
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
-const consumable_constant_1 = require("./consumable.constant");
+const device_constant_1 = require("./device.constant");
 const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, skip } = paginationHelper_1.paginationHelpers.calculatePagination(options);
     const { searchTerm } = filters, filterData = __rest(filters, ["searchTerm"]);
     const andConditons = [];
     if (searchTerm) {
         andConditons.push({
-            OR: consumable_constant_1.consumableSearchAbleFields.map(field => ({
+            OR: device_constant_1.deviceSearchAbleFields.map(field => ({
                 [field]: {
                     contains: searchTerm,
                     mode: 'insensitive',
@@ -52,7 +52,7 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
         });
     }
     const whereConditons = andConditons.length > 0 ? { AND: andConditons } : {};
-    const result = yield prisma_1.default.consumable.findMany({
+    const result = yield prisma_1.default.device.findMany({
         where: whereConditons,
         include: {
             reviews: true,
@@ -67,7 +67,7 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
             // createdAt: 'desc',
             },
     });
-    const total = yield prisma_1.default.consumable.count();
+    const total = yield prisma_1.default.device.count();
     return {
         meta: {
             total,
@@ -78,7 +78,7 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
     };
 });
 const getDataById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.consumable.findUnique({
+    const result = yield prisma_1.default.device.findUnique({
         where: {
             id,
         },
@@ -89,13 +89,13 @@ const getDataById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.consumable.create({
+    const result = yield prisma_1.default.device.create({
         data,
     });
     return result;
 });
 const updateOneInDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.consumable.update({
+    const result = yield prisma_1.default.device.update({
         where: {
             id,
         },
@@ -104,14 +104,14 @@ const updateOneInDB = (id, payload) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const deleteByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield prisma_1.default.consumable.delete({
+    const result = yield prisma_1.default.device.delete({
         where: {
             id,
         },
     });
     return result;
 });
-exports.ConsumableService = {
+exports.DeviceService = {
     getAllFromDB,
     getDataById,
     insertIntoDB,
