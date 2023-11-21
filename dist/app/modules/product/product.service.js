@@ -54,6 +54,9 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
     const whereConditons = andConditons.length > 0 ? { AND: andConditons } : {};
     const result = yield prisma_1.default.product.findMany({
         where: whereConditons,
+        include: {
+            reviews: true,
+        },
         skip,
         take: limit,
         orderBy: options.sortBy && options.sortOrder
@@ -78,6 +81,9 @@ const getDataById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.product.findUnique({
         where: {
             id,
+        },
+        include: {
+            reviews: true,
         },
     });
     return result;
