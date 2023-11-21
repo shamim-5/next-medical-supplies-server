@@ -6,6 +6,7 @@ import { MedicalEquipmentRoute } from '../modules/medicalEquipment/medicalEquipm
 import { OrderRoute } from '../modules/order/order.route';
 import { ProductRoute } from '../modules/product/product.route';
 import { ReagentRoute } from '../modules/reagent/reagent.route';
+import { ReviewRoute } from '../modules/review/review.route';
 import { ShopDetailRoute } from '../modules/shopDetail/shopDetail.route';
 import { TopProductRoute } from '../modules/topProduct/topProduct.route';
 
@@ -48,6 +49,10 @@ const moduleRoutes = [
   {
     path: '/orders',
     route: OrderRoute,
+  },
+  {
+    path: '/reviews',
+    route: ReviewRoute,
   },
 ];
 

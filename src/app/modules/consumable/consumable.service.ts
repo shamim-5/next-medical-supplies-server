@@ -42,6 +42,9 @@ const getAllFromDB = async (
 
   const result = await prisma.consumable.findMany({
     where: whereConditons,
+    include: {
+      reviews: true,
+    },
     skip,
     take: limit,
     orderBy:
@@ -70,6 +73,9 @@ const getDataById = async (id: string): Promise<Consumable | null> => {
   const result = await prisma.consumable.findUnique({
     where: {
       id,
+    },
+    include: {
+      reviews: true,
     },
   });
 
