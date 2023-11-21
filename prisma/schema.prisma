@@ -9,6 +9,7 @@ generator client {
 
 model Product {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
+  productId    Json?
   name         String
   category     String
   description  String
@@ -39,6 +40,7 @@ model TopRatedProduct {
 
 model Reagent {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
+  reagentId    Json?
   name         String
   category     String
   description  String
@@ -53,8 +55,26 @@ model Reagent {
   @@map("reagents")
 }
 
+model Device {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  deviceId     Json?
+  name         String
+  category     String
+  description  String
+  price        Int
+  stock        Int
+  manufacturer String
+  imageURL     String
+  avatarUrl    String
+
+  reviews Review[]
+
+  @@map("devices")
+}
+
 model Consumable {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
+  consumableId Json?
   name         String
   category     String
   description  String
@@ -71,6 +91,7 @@ model Consumable {
 
 model MedicalEquipment {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
+  equipmentId  Json?
   name         String
   category     String
   description  String
@@ -115,22 +136,23 @@ model Order {
 
 model Review {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  rating   String
+  rating   Int
   userName String
   email    String
   comment  String
 
-  product   Product @relation(fields: [productId], references: [id])
-  productId String  @db.ObjectId
+  Product      Product?          @relation(fields: [productId], references: [id])
+  productId    String?           @db.ObjectId
+  Reagent      Reagent?          @relation(fields: [reagentId], references: [id])
+  reagentId    String?           @db.ObjectId
+  Device       Device?           @relation(fields: [deviceId], references: [id])
+  deviceId     String?           @db.ObjectId
+  Consumable   Consumable?       @relation(fields: [consumableId], references: [id])
+  consumableId String?           @db.ObjectId
+  Equipment    MedicalEquipment? @relation(fields: [equipmentId], references: [id])
+  equipmentId  String?           @db.ObjectId
 
-  reagent   Reagent @relation(fields: [reagentId], references: [id])
-  reagentId String  @db.ObjectId
-
-  consumable   Consumable @relation(fields: [consumableId], references: [id])
-  consumableId String     @db.ObjectId
-
-  medicalEquipment   MedicalEquipment @relation(fields: [medicalEquipmentId], references: [id])
-  medicalEquipmentId String           @db.ObjectId
+  @@map("reviews")
 }
 
 model ShopDetail {

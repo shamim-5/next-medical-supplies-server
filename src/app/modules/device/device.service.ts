@@ -1,15 +1,15 @@
-import { MedicalEquipment, Prisma } from '@prisma/client';
+import { Device, Prisma } from '@prisma/client';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
-import { medicalEquipmentSearchAbleFields } from './medicalEquipment.constant';
-import { IMedicalEquipmentFilterRequest } from './medicalEquipment.interface';
+import { deviceSearchAbleFields } from './device.constant';
+import { IDeviceFilterRequest } from './device.interface';
 
 const getAllFromDB = async (
-  filters: IMedicalEquipmentFilterRequest,
+  filters: IDeviceFilterRequest,
   options: IPaginationOptions,
-): Promise<IGenericResponse<MedicalEquipment[]>> => {
+): Promise<IGenericResponse<Device[]>> => {
   const { page, limit, skip } = paginationHelpers.calculatePagination(options);
   const { searchTerm, ...filterData } = filters;
 
@@ -17,7 +17,7 @@ const getAllFromDB = async (
 
   if (searchTerm) {
     andConditons.push({
-      OR: medicalEquipmentSearchAbleFields.map(field => ({
+      OR: deviceSearchAbleFields.map(field => ({
         [field]: {
           contains: searchTerm,
           mode: 'insensitive',
@@ -37,10 +37,10 @@ const getAllFromDB = async (
     });
   }
 
-  const whereConditons: Prisma.MedicalEquipmentWhereInput =
+  const whereConditons: Prisma.DeviceWhereInput =
     andConditons.length > 0 ? { AND: andConditons } : {};
 
-  const result = await prisma.medicalEquipment.findMany({
+  const result = await prisma.device.findMany({
     where: whereConditons,
     include: {
       reviews: true,
@@ -57,7 +57,7 @@ const getAllFromDB = async (
           },
   });
 
-  const total = await prisma.medicalEquipment.count();
+  const total = await prisma.device.count();
 
   return {
     meta: {
@@ -69,8 +69,8 @@ const getAllFromDB = async (
   };
 };
 
-const getDataById = async (id: string): Promise<MedicalEquipment | null> => {
-  const result = await prisma.medicalEquipment.findUnique({
+const getDataById = async (id: string): Promise<Device | null> => {
+  const result = await prisma.device.findUnique({
     where: {
       id,
     },
@@ -82,10 +82,8 @@ const getDataById = async (id: string): Promise<MedicalEquipment | null> => {
   return result;
 };
 
-const insertIntoDB = async (
-  data: MedicalEquipment,
-): Promise<MedicalEquipment> => {
-  const result = await prisma.medicalEquipment.create({
+const insertIntoDB = async (data: Device): Promise<Device> => {
+  const result = await prisma.device.create({
     data,
   });
 
@@ -94,9 +92,9 @@ const insertIntoDB = async (
 
 const updateOneInDB = async (
   id: string,
-  payload: Partial<MedicalEquipment>,
-): Promise<MedicalEquipment> => {
-  const result = await prisma.medicalEquipment.update({
+  payload: Partial<Device>,
+): Promise<Device> => {
+  const result = await prisma.device.update({
     where: {
       id,
     },
@@ -106,8 +104,8 @@ const updateOneInDB = async (
   return result;
 };
 
-const deleteByIdFromDB = async (id: string): Promise<MedicalEquipment> => {
-  const result = await prisma.medicalEquipment.delete({
+const deleteByIdFromDB = async (id: string): Promise<Device> => {
+  const result = await prisma.device.delete({
     where: {
       id,
     },
@@ -116,7 +114,7 @@ const deleteByIdFromDB = async (id: string): Promise<MedicalEquipment> => {
   return result;
 };
 
-export const MedicalEquipmentService = {
+export const DeviceService = {
   getAllFromDB,
   getDataById,
   insertIntoDB,
