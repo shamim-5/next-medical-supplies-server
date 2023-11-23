@@ -8,6 +8,7 @@ import { ProductRoute } from '../modules/product/product.route';
 import { ReagentRoute } from '../modules/reagent/reagent.route';
 import { ReviewRoute } from '../modules/review/review.route';
 import { ShopDetailRoute } from '../modules/shopDetail/shopDetail.route';
+import { SubscriptionRoute } from '../modules/subscription/subscription.route';
 import { TopProductRoute } from '../modules/topProduct/topProduct.route';
 
 const router = express.Router();
@@ -53,6 +54,10 @@ const moduleRoutes = [
   {
     path: '/reviews',
     route: ReviewRoute,
+  },
+  {
+    path: '/subscriptions',
+    route: SubscriptionRoute,
   },
 ];
 
