@@ -2,6 +2,7 @@ import express from 'express';
 import { CartItemRoute } from '../modules/cartItem/cartItem.route';
 import { ConsumableRoute } from '../modules/consumable/consumable.route';
 import { DeviceRoute } from '../modules/device/device.route';
+import { DueListRoute } from '../modules/dueList/dueList.route';
 import { MedicalEquipmentRoute } from '../modules/medicalEquipment/medicalEquipment.route';
 import { OrderRoute } from '../modules/order/order.route';
 import { ProductRoute } from '../modules/product/product.route';
@@ -50,6 +51,10 @@ const moduleRoutes = [
   {
     path: '/orders',
     route: OrderRoute,
+  },
+  {
+    path: '/due-list',
+    route: DueListRoute,
   },
   {
     path: '/reviews',

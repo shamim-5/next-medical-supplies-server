@@ -121,7 +121,7 @@ model CartItem {
 }
 
 model Order {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   userId    String
   userName  String
   email     String
@@ -130,6 +130,7 @@ model Order {
   paid      Boolean
   timestamp String
   order     Json[]
+  DueList   DueList[]
 
   @@map("orders")
 }
@@ -174,4 +175,21 @@ model ShopDetail {
   sliderImage    Json
 
   @@map("shop-details")
+}
+
+model DueList {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userName  String?
+  email     String
+  paid      Boolean?
+  timestamp String?
+
+  totalPrice    Int
+  discount      Int
+  discountPrice Int
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique @db.ObjectId
+
+  @@map("due-list")
 }
