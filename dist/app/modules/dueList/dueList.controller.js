@@ -22,7 +22,7 @@ const getAllFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'DueLists fetched successfully',
+        message: 'DueList fetched successfully',
         data: result,
     });
 }));
@@ -31,7 +31,7 @@ const getAllDataByEmail = (0, catchAsync_1.default)((req, res) => __awaiter(void
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Orders fetched successfully',
+        message: 'DueList fetched successfully',
         data: result,
     });
 }));
@@ -40,7 +40,7 @@ const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Order successfully created!',
+        message: 'DueList successfully created!',
         data: result,
     });
 }));
@@ -50,7 +50,7 @@ const updateOneInDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'Academic Semster updated successfully',
+        message: 'DueList updated successfully',
         data: result,
     });
 }));
