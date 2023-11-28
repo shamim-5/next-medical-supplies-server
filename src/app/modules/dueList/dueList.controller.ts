@@ -10,7 +10,7 @@ const result = await DueListService.getAllFromDB();
 sendResponse(res, {
   statusCode: httpStatus.OK,
   success: true,
-  message: 'DueLists fetched successfully',
+  message: 'DueList fetched successfully',
   data: result,
  });
 });
@@ -22,7 +22,7 @@ const getAllDataByEmail = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Orders fetched successfully',
+    message: 'DueList fetched successfully',
     data: result,
   });
 });
@@ -33,7 +33,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Order successfully created!',
+    message: 'DueList successfully created!',
     data: result,
   });
 });
@@ -45,7 +45,7 @@ const updateOneInDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Semster updated successfully',
+    message: 'DueList updated successfully',
     data: result,
   });
 });
