@@ -7,12 +7,14 @@ const express_1 = __importDefault(require("express"));
 const cartItem_route_1 = require("../modules/cartItem/cartItem.route");
 const consumable_route_1 = require("../modules/consumable/consumable.route");
 const device_route_1 = require("../modules/device/device.route");
+const dueList_route_1 = require("../modules/dueList/dueList.route");
 const medicalEquipment_route_1 = require("../modules/medicalEquipment/medicalEquipment.route");
 const order_route_1 = require("../modules/order/order.route");
 const product_route_1 = require("../modules/product/product.route");
 const reagent_route_1 = require("../modules/reagent/reagent.route");
 const review_route_1 = require("../modules/review/review.route");
 const shopDetail_route_1 = require("../modules/shopDetail/shopDetail.route");
+const subscription_route_1 = require("../modules/subscription/subscription.route");
 const topProduct_route_1 = require("../modules/topProduct/topProduct.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
@@ -54,8 +56,16 @@ const moduleRoutes = [
         route: order_route_1.OrderRoute,
     },
     {
+        path: '/due-list',
+        route: dueList_route_1.DueListRoute,
+    },
+    {
         path: '/reviews',
         route: review_route_1.ReviewRoute,
+    },
+    {
+        path: '/subscriptions',
+        route: subscription_route_1.SubscriptionRoute,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));
