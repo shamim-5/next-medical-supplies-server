@@ -177,6 +177,17 @@ model ShopDetail {
   @@map("shop-details")
 }
 
+model UserDetail {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String
+  phoneNumber Int?
+  address     Json?
+  fileUploads FileUpload[]
+
+  @@map("user-details")
+}
+
 model DueList {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userName  String?
@@ -192,4 +203,14 @@ model DueList {
   orderId String @unique @db.ObjectId
 
   @@map("due-list")
+}
+
+model FileUpload {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  photoURL String
+
+  UserDetail   UserDetail? @relation(fields: [userDetailId], references: [id])
+  userDetailId String?     @db.ObjectId
+
+  @@map("file-uploads")
 }
