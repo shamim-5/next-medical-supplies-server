@@ -180,7 +180,7 @@ model ShopDetail {
 model UserDetail {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  email       String
+  email       String       @unique
   phoneNumber Int?
   address     Json?
   fileUploads FileUpload[]
