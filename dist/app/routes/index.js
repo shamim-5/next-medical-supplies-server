@@ -8,6 +8,7 @@ const cartItem_route_1 = require("../modules/cartItem/cartItem.route");
 const consumable_route_1 = require("../modules/consumable/consumable.route");
 const device_route_1 = require("../modules/device/device.route");
 const dueList_route_1 = require("../modules/dueList/dueList.route");
+const fileUpload_route_1 = require("../modules/fileUpload/fileUpload.route");
 const medicalEquipment_route_1 = require("../modules/medicalEquipment/medicalEquipment.route");
 const order_route_1 = require("../modules/order/order.route");
 const product_route_1 = require("../modules/product/product.route");
@@ -16,12 +17,17 @@ const review_route_1 = require("../modules/review/review.route");
 const shopDetail_route_1 = require("../modules/shopDetail/shopDetail.route");
 const subscription_route_1 = require("../modules/subscription/subscription.route");
 const topProduct_route_1 = require("../modules/topProduct/topProduct.route");
+const userDetail_route_1 = require("../modules/userDetail/userDetail.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     // ... routes
     {
         path: '/shop-details',
         route: shopDetail_route_1.ShopDetailRoute,
+    },
+    {
+        path: '/user-details',
+        route: userDetail_route_1.UserDetailRoute,
     },
     {
         path: '/top-products',
@@ -66,6 +72,10 @@ const moduleRoutes = [
     {
         path: '/subscriptions',
         route: subscription_route_1.SubscriptionRoute,
+    },
+    {
+        path: '/file-uploads',
+        route: fileUpload_route_1.FileUploadRoute,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));
