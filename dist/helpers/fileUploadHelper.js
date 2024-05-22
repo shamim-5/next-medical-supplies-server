@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileUploadHelper = void 0;
 const cloudinary_1 = require("cloudinary");
-const fs = __importStar(require("fs"));
+// import * as fs from 'fs';
 const multer_1 = __importDefault(require("multer"));
 // cloudinary configuration
 cloudinary_1.v2.config({
@@ -45,28 +22,50 @@ cloudinary_1.v2.config({
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
 });
-// store file in uploads folder using multer
-const storage = multer_1.default.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    },
-});
+// option-1: store file in uploads folder using multer disk storage
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname);
+//   },
+// });
+// option-2: store file in multer memory storage
+const storage = multer_1.default.memoryStorage();
 const upload = (0, multer_1.default)({ storage: storage });
-// uploading an asset to cloudinary
+// option-1: uploading an asset to cloudinary for disk storage
+// const uploadToCloudinary = async (
+//   file: IUploadFile,
+// ): Promise<ICloudinaryResponse | undefined> => {
+//   return new Promise((resolve, reject) => {
+//     cloudinary.uploader.upload(
+//       file.path,
+//       (error: Error, result: ICloudinaryResponse) => {
+//         fs.unlinkSync(file.path);
+//         if (error) {
+//           reject(error);
+//         } else {
+//           resolve(result);
+//         }
+//       },
+//     );
+//   });
+// };
+// option-2: uploading an asset to cloudinary for memory storage  
 const uploadToCloudinary = (file) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
-        cloudinary_1.v2.uploader.upload(file.path, (error, result) => {
-            fs.unlinkSync(file.path);
+        cloudinary_1.v2.uploader
+            .upload_stream({ resource_type: 'raw' }, // Adjust as needed for the file type
+        (error, result) => {
             if (error) {
                 reject(error);
             }
             else {
                 resolve(result);
             }
-        });
+        })
+            .end(file.buffer); // Use the buffer instead of file.path
     });
 });
 exports.FileUploadHelper = {
