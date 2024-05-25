@@ -1,5 +1,8 @@
-import { v2 as cloudinary } from 'cloudinary';
-import * as fs from 'fs';
+import {
+  v2 as cloudinary,
+  UploadApiErrorResponse,
+  UploadApiResponse,
+} from 'cloudinary';
 import multer from 'multer';
 import { ICloudinaryResponse, IUploadFile } from '../interfaces/file';
 
@@ -11,14 +14,7 @@ cloudinary.config({
 });
 
 // store file in uploads folder using multer
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
 
@@ -27,18 +23,21 @@ const uploadToCloudinary = async (
   file: IUploadFile,
 ): Promise<ICloudinaryResponse | undefined> => {
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(
-      file.path,
-      (error: Error, result: ICloudinaryResponse) => {
-        fs.unlinkSync(file.path);
-
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
-      },
-    );
+    cloudinary.uploader
+      .upload_stream(
+        { resource_type: 'raw' },
+        (
+          error: UploadApiErrorResponse | undefined,
+          result: UploadApiResponse | undefined,
+        ) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result as unknown as ICloudinaryResponse);
+          }
+        },
+      )
+      .end(file.buffer);
   });
 };
 

@@ -1,5 +1,5 @@
 {
-  "name": "university-management-core-service",
+  "name": "prisma-mongodb-server",
   "version": "1.0.0",
   "description": "",
   "main": "src/server.ts",
@@ -17,7 +17,7 @@
     "lint-prettier": "yarn lint:check && yarn prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Programming Hero",
+  "author": "Muhammad Shamim", 
   "license": "ISC",
   "lint-staged": {
     "src/**/*.ts": "yarn lint-prettier"
