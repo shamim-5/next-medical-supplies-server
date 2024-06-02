@@ -214,3 +214,7 @@ model FileUpload {
 
   @@map("file-uploads")
 }
+
+model Home {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}

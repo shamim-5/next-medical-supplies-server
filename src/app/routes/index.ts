@@ -4,6 +4,7 @@ import { ConsumableRoute } from '../modules/consumable/consumable.route';
 import { DeviceRoute } from '../modules/device/device.route';
 import { DueListRoute } from '../modules/dueList/dueList.route';
 import { FileUploadRoute } from '../modules/fileUpload/fileUpload.route';
+import { HomeRoute } from '../modules/home/home.route';
 import { MedicalEquipmentRoute } from '../modules/medicalEquipment/medicalEquipment.route';
 import { OrderRoute } from '../modules/order/order.route';
 import { ProductRoute } from '../modules/product/product.route';
@@ -73,6 +74,10 @@ const moduleRoutes = [
   {
     path: '/file-uploads',
     route: FileUploadRoute,
+  },
+  {
+    path: '/',
+    route: HomeRoute,
   },
 ];
 
