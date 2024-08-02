@@ -25,7 +25,7 @@ const uploadToCloudinary = async (
   return new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload_stream(
-        { resource_type: 'raw' },
+        { resource_type: 'auto' },
         (
           error: UploadApiErrorResponse | undefined,
           result: UploadApiResponse | undefined,
