@@ -44,7 +44,7 @@ const updateOneInDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Semster updated successfully',
+    message: 'Order updated successfully',
     data: result,
   });
 });

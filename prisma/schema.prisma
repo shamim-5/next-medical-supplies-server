@@ -25,7 +25,7 @@ model Product {
 }
 
 model TopRatedProduct {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   category     String
   description  String
@@ -34,6 +34,7 @@ model TopRatedProduct {
   manufacturer String
   imageURL     String
   avatarUrl    String
+  reviews       Review[]
 
   @@map("top-rated-products")
 }
@@ -152,6 +153,8 @@ model Review {
   consumableId String?           @db.ObjectId
   Equipment    MedicalEquipment? @relation(fields: [equipmentId], references: [id])
   equipmentId  String?           @db.ObjectId
+  topProduct   TopRatedProduct?  @relation(fields: [topProductId], references: [id])
+  topProductId String?           @db.ObjectId
 
   @@map("reviews")
 }

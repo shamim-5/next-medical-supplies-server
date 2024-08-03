@@ -39,7 +39,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse<MedicalEquipment>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic semester successfully created!',
+    message: 'Medical Equipment successfully created!',
     data: result,
   });
 });
@@ -50,7 +50,7 @@ const updateOneInDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Semster updated successfully',
+    message: 'Medical Equipment updated successfully',
     data: result,
   });
 });
@@ -61,7 +61,7 @@ const deleteByIdFromDB = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic Semster delete successfully',
+    message: 'Medical Equipment delete successfully',
     data: result,
   });
 });
