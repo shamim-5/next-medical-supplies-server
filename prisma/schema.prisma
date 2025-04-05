@@ -169,6 +169,8 @@ model Subscription {
 model ShopDetail {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   name           String
+  partnerInfo    Json?
+  shopName       Json?
   location       Json
   contact        Json
   specialOffers  Json
